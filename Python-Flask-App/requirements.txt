@@ -1,0 +1,5 @@
+flask
+toml
+flask-SQLAlchemy
+flask-RESTful
+confluent-kafka
