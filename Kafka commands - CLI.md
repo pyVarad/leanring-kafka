@@ -2,16 +2,16 @@
 
 ### Quick setup of Kafka for practice.
 
-In order to practice the kafka commands it is also essential to setup the kafka cluster. An easy way to setup kafka to practice the `cli` is by using docker. We can make use of the docker-compose.yml from  `Confluent-Kafka` to quickly get started.
+To practice the Kafka commands it is also essential to setup the Kafka cluster. An easy way to setup Kafka to practice the cli is by using docker. We can make use of the docker-compose.yml from Confluent-Kafka to get started.
 
 Step 1: Download the [docker-compose.yml](https://github.com/confluentinc/cp-all-in-one/blob/6.1.1-post/cp-all-in-one/docker-compose.yml)
-Step 2: `docker compose up` for latest version of docker or use `docker-compose up`. Ensure this command is used from within the directory where `docker-compose.yml` is downloaded.
-Step 3: Wait till the orchestration completed which can be verified using from the browser [Confluent Control Center](http://localhost:9021)
-Step 4: If the control center reports there is `1 health cluster` we have successfully setup kakfa and zookeeper with default configuration.
+Step 2: `docker compose up` for latest version of docker or use docker-compose up. Issue the command from directory hosting **docker-compose.yml** file. 
+Step 3: Wait for the setup to complete (roughly take 2-5 minutes). Click on [Confluent Control Center](http://localhost:9021) to check cluster health. 
+Step 4: The control center will report **1 health cluster**  when setup is complete.
 
-To access kafka follow the steps below.
+##### To access Kafka follow the steps below.
 
-Step 1: Get the list of docker containers using the command.
+Get the list of docker containers using the command.
 ```bash
 C:\>docker container ls
 CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS              PORTS                                                                                  NAMES
@@ -26,7 +26,7 @@ b8914a282afb   e451b69bd35c   "/etc/confluent/dock…"   22 hours ago   Up About
 16e000d19529   e8aa6e219dbb   "/etc/confluent/dock…"   22 hours ago   Up About a minute   2888/tcp, 0.0.0.0:2181->2181/tcp, :::2181->2181/tcp, 3888/tcp                          zookeeper
 ```
 
-In the list of images we would be interested int image with name `broker`. Hence to practice the commands we will log into the `broker` container.
+Make use of Kafka broker image identified as `broker` for practicing the cli commands.
 
 ```bash
 C:\>docker container exec -it 0f41ece99484 sh
@@ -55,7 +55,7 @@ These steps do not give the visibility on setting up of cluster. They only help 
 
 ### Kafka Command - kafka-topics
 
-The first command on the command line interface is to know how to create a kafka-topic. This can be achieved using the kafka utility `kafka-topics`. The `kafka-topic` command --help gives an extensive list of parameters that can be used to create a topic in the cluster. However the bare minumum configuration required to create a topic in a cluster is
+The first command on the command line interface is to know how to create a kafka-topic. This can be achieved using the kafka utility `kafka-topics`. The `kafka-topic` command --help gives an extensive list of parameters that can be used to create a topic in the cluster. The least configuration required to create a topic in a cluster is
 
 ##### Add topics.
 
@@ -174,7 +174,7 @@ Topic: new_topic        PartitionCount: 1       ReplicationFactor: 1    Configs:
 sh-4.4$
 ```
 
-However it is not a good practice to create a topic dynamically, unless the situation demands the same.
+It is not a good practice to create a topic dynamically, unless the situation demands the same.
 
 
 ### Kafka Command - kafka-console-consumer
@@ -186,7 +186,7 @@ The *bootstrap-server* points to kafka cluster url.
 sh-4.4$ kafka-console-consumer --bootstrap-server localhost:9092  --topic first_topic
 
 ```
-Note: We would not see the messages loaded before starting the consumer to do so we need to have additiona flag `--from-beginning`. However all messages once the consumer is up will be visible with the above command. Try publishing messages from another termnial using the `kafka-console-producer` utility discussed in the previous section.
+Note: We would not see the messages loaded before starting the consumer to do so we need to have additiona flag `--from-beginning`. Messages once the consumer is up will be visible with the above command (and not from beginning). Try publishing messages from another termnial using the `kafka-console-producer` utility discussed in the previous section.
 
 ```bash
 # From the producer terminal
@@ -219,6 +219,6 @@ All good. I should be getting acks when I consumer messages
 
 In production it is to be noted that messages from the topics should be thorough a consumer group. Consumer group takes care of load balancing of the messages sent to each partition by the producer. In a way it allows to resume the service and start consuming the message from the commit when the application left off when it restarted or brought down for maintenance.
 
-The other commonly used command is `kafka-consumer-groups`. They are typically used to get the status, add, delete and reset the offset for consumer groups.
+`kafka-consumer-groups` are used to configuring the consumer groups actions namely (delete a consumer group, reset the commit offset etc).
 
 
