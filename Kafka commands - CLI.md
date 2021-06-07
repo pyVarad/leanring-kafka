@@ -220,5 +220,3 @@ All good. I should be getting acks when I consumer messages
 In production it is to be noted that messages from the topics should be thorough a consumer group. Consumer group takes care of load balancing of the messages sent to each partition by the producer. In a way it allows to resume the service and start consuming the message from the commit when the application left off when it restarted or brought down for maintenance.
 
 `kafka-consumer-groups` are used to configuring the consumer groups actions namely (delete a consumer group, reset the commit offset etc).
-
-
